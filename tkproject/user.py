@@ -35,31 +35,29 @@ def success():
 
     else:
         outfile = open('info.txt', 'a')
-        infile = open("info.txt", 'r')
+        infile = open('info.txt', 'r') # cant read a file that doesnt exist
         content = infile.readlines()
         content = [x.strip() for x in content]
         #creates a list with the users in differnet elements(have commas seperating)
         z = [i.split(' ', 1)[0] for i in content]  # gets the usernames from the "content" list and puts in a new list
-        for x in z:  # goes through each element(user) and prints them on seperate lines without the junk(, [] '')
-            if x == usern.get():  # as it goes through each element, it checks to see if that is the username entered
-                result.set("Username exists already")
-                usern.set('')  # makes username empty
-                pasw.set('')  # makes password empty
-                departs.set('')  # makes departments empty
-                gender.set('')  # makes gender empty
-                type.set('0')  # sets usertype to offvalue, clears
-                infile.close()
-            else:
-                infile = open('info.txt', 'a')
-                result.set(" User Created") # #prints to tkinter
-                file = (usern.get()+' '+pasw.get()+' '+gender.get()+' '+type.get()+' '+departs.get()+'\n')
-                outfile.write(file) #file will show up/update with ALL of the informaton after you close/minus the window
-                outfile.close()
-                usern.set('') #makes username empty
-                pasw.set('') #makes password empty
-                departs.set('') #makes departments empty
-                gender.set('') #makes gender empty
-                type.set('0') #sets usertype to offvalue, clears
+        if usern.get() in z:  #checks to see if username user put in is in username list(z)
+            result.set("   User exists")
+            infile.close()
+            usern.set('')  # makes username empty
+            pasw.set('')  # makes password empty
+            departs.set('')  # makes departments empty
+            gender.set('')  # makes gender empty
+            type.set('0')  # sets usertype to offvalue, clears
+        else:
+            result.set("User created")
+            file = (usern.get()+' '+pasw.get()+' '+gender.get()+' '+type.get()+' '+departs.get()+'\n')
+            outfile.write(file) #file will show up/update with ALL of the informaton after you close/minus the window
+            outfile.close()
+            usern.set('') #makes username empty
+            pasw.set('') #makes password empty
+            departs.set('') #makes departments empty
+            gender.set('') #makes gender empty
+            type.set('0') #sets usertype to offvalue, clears
 
 
 def rd():
@@ -69,7 +67,7 @@ def rd():
     z = [i.split(' ', 1)[0] for i in content] # gets the usernames from the "content" list and puts in a new list
     for x in z: #goes through each element(user) and prints them on seperate lines without the junk(, [] '')
         if x == usern.get(): #as it goes through each element, it checks to see if that is the username entered
-            result.set(" ") #Gets rid of NOT FOUND
+            result.set(" ") #Get_s rid of NOT FOUND
             a = z.index(x) #locates the INDEX of the username(x) which has PASSWORD AND OTHER info from the "z" list
             b = [content[a]] #prints everything that is located in the username(x) index from the "content" list as list
             l = [words for segments in b for words in segments.split()]
@@ -84,7 +82,7 @@ def rd():
             # ...others are not the ones requested. if dont have break it will say NOT FOUND under the else. this...
             # ...breaks it after the user is found and doesn't go any further
         else: # look at foor loop that deosnt have the list(for x in z). this is what happens if the "x" is not the one
-            result.set("  NOT FOUND")
+            result.set("NOT FOUND")
     infile.close()
 root = Tk()
 root.title("New User")
